@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/facemask"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".SplashScreen">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:background="#d6f5f2f2">
+
+        <ImageView
+            android:id="@+id/virus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:src="@drawable/virus" />
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="16dp"
+            android:layout_alignBaseline="@id/virus"
+            android:layout_alignBottom="@id/virus"
+            android:layout_marginBottom="5dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="170dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"></LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#d6f5f2f2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COVID-19"
+            android:textColor="#E41B1B"
+            android:textSize="70dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UPDATE"
+            android:textColor="#3BB3D0"
+            android:textSize="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
