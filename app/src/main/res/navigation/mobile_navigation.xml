@@ -31,18 +31,23 @@
 
     <fragment
         android:id="@+id/nav_statistics"
-        android:name="com.example.covid_19_update.ui.gallery.GalleryFragment"
+        android:name="com.example.covid_19_update.ui.statistics.StatisticsFragment"
         android:label="@string/menu_statistics"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_statistics" />
 
     <fragment
         android:id="@+id/nav_safetytips"
-        android:name="com.example.covid_19_update.ui.slideshow.SlideshowFragment"
+        android:name="com.example.covid_19_update.ui.safetytips.SafetyTipsFragment"
         android:label="@string/menu_safetytips"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_safetytips" />
     <fragment
         android:id="@+id/nav_emergencylines"
         android:name="com.example.covid_19_update.ui.emergencylines.EmergencyLines"
         android:label="@string/menu_Emergency"
         tools:layout="@layout/emergency_lines_fragment" />
+    <fragment
+        android:id="@+id/nav_diagnosis"
+        android:name="com.example.covid_19_update.DiagnoseFragment"
+        android:label="Diagnosis"
+        tools:layout="@layout/fragment_diagnose" />
 </navigation>

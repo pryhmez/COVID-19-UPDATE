@@ -1,4 +1,4 @@
-package com.example.covid_19_update.ui.gallery;
+package com.example.covid_19_update.ui.statistics;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +10,7 @@ public class GalleryViewModel extends ViewModel {
 
     public GalleryViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("27");
     }
 
     public LiveData<String> getText() {

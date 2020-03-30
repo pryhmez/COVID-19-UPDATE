@@ -20,5 +20,15 @@
             android:id="@+id/nav_emergencylines"
             android:icon="@drawable/phone"
             android:title="@string/menu_Emergency" />
+        <item
+            android:id="@+id/nav_diagnosis"
+            android:icon="@drawable/ic_heart"
+            android:title="Diagnose yourself" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/share"
+            android:title="Share" />
     </group>
 </menu>

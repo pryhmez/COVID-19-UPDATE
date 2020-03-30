@@ -2,6 +2,7 @@ package com.example.covid_19_update.ui.news;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Movie;
 import android.graphics.Rect;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +32,11 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.covid_19_update.Article;
 import com.example.covid_19_update.ArticlesAdapter;
+import com.example.covid_19_update.ArticlesWebView;
+import com.example.covid_19_update.MainActivity;
 import com.example.covid_19_update.R;
 import com.example.covid_19_update.app.MyApplication;
+import com.example.covid_19_update.utils.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,26 +46,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//public class NewsFragment extends Fragment {
-//
-//    private NewsViewModel newsViewModel;
-//
-//    public View onCreateView(@NonNull LayoutInflater inflater,
-//                             ViewGroup container, Bundle savedInstanceState) {
-//        newsViewModel =
-//                ViewModelProviders.of(this).get(NewsViewModel.class);
-//        View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        newsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-//        return root;
-//    }
-//}
 
 
 public class NewsFragment extends Fragment {
@@ -74,6 +59,11 @@ public class NewsFragment extends Fragment {
     private List<Article> itemsList;
     private ArticlesAdapter mAdapter;
     private ProgressDialog nDialog;
+    private Article article;
+    private Util utils;
+    private LinearLayout noInt;
+
+    ArticlesAdapter.RecyclerViewClickListener listener;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -86,6 +76,21 @@ public class NewsFragment extends Fragment {
         return fragment;
     }
 
+//    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            //TODO: Step 4 of 4: Finally call getTag() on the view.
+//            // This viewHolder will have all required values.
+//            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+//            int position = viewHolder.getAdapterPosition();
+//            // viewHolder.getItemId();
+//            // viewHolder.getItemViewType();
+//            // viewHolder.itemView;
+//            article = itemsList.get(position);
+//            Toast.makeText(getContext(), "You Clicked: " + article.getTitle(), Toast.LENGTH_SHORT).show();
+//            Log.d("chosen", article.getTitle().toString());
+//        }
+//    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +102,11 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        utils = new Util();
+        noInt = view.findViewById(R.id.noInternet);
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
-        mAdapter = new ArticlesAdapter(itemsList, getActivity());
+//        mAdapter = new ArticlesAdapter(itemsList, getActivity(), listener);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -107,8 +114,25 @@ public class NewsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
+        listener = (myView, position) -> {
+            Toast.makeText(getActivity().getApplicationContext(), "Position "+position , Toast.LENGTH_LONG).show();
+            Log.d("chosen", String.valueOf(((int) position)));
+            Intent intent = new Intent(getActivity(), ArticlesWebView.class);
+            intent.putExtra("page", itemsList.get(position).getUrl());
+            startActivity(intent);
+        };
+         mAdapter = new ArticlesAdapter(itemsList, getContext(), listener);
+//        mAdapter.setOnItemClickListener(onItemClickListener);
 
-        fetchStoreItems();
+        if(utils.isNetworkAvailable(getActivity())){
+            noInt.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            fetchStoreItems();
+        }else{
+            noInt.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            Toast.makeText(getActivity().getApplicationContext(), "Please turn on your internet connection", Toast.LENGTH_LONG).show();
+        }
 
         return view;
     }
@@ -156,7 +180,7 @@ public class NewsFragment extends Fragment {
                                 itemsList.add(article);
                             }
 
-                            mAdapter = new ArticlesAdapter(itemsList, getActivity());
+                            mAdapter = new ArticlesAdapter(itemsList, getActivity(), listener);
                             recyclerView.setAdapter(mAdapter);
                             nDialog.dismiss();
                         } catch (JSONException e) {

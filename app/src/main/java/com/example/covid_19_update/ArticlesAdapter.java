@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,10 +21,17 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
 
     private List<Article> articleList;
     private Context context;
+//    private View.OnClickListener mOnItemClickListener;
+    private RecyclerViewClickListener mListener;
 
-    public  ArticlesAdapter(List<Article> articleList, Context context) {
+//   public ArticlesAdapter(RecyclerViewClickListener listener) {
+//        mListener = listener;
+//    }
+
+    public  ArticlesAdapter(List<Article> articleList, Context context, RecyclerViewClickListener listener) {
         this.articleList = articleList;
         this.context = context;
+        this.mListener = listener;
     }
 
     @Override
@@ -30,7 +39,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.store_item_row, parent, false);
 
-        return new ArticlesViewHolder(itemView);
+        return new ArticlesViewHolder(itemView, mListener);
     }
 
     @Override
@@ -49,17 +58,37 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         return articleList.size();
     }
 
+//    public void setOnItemClickListener(View.OnClickListener itemClickListener) {
+//        mOnItemClickListener = itemClickListener;
+//    }
+    public interface RecyclerViewClickListener {
+
+        void onClick(View view, int position);
+    }
     //view holder for the articles
-    class ArticlesViewHolder extends RecyclerView.ViewHolder {
+    class ArticlesViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         TextView title, desc;
         ImageView imageView;
-
-        ArticlesViewHolder(View itemView) {
+        CardView cardView;
+        private RecyclerViewClickListener mListener;
+        ArticlesViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
             desc = itemView.findViewById(R.id.desc);
             imageView = itemView.findViewById(R.id.thumbnail);
+            cardView = itemView.findViewById(R.id.card_view);
+
+
+            mListener = listener;
+            title.setOnClickListener(this);
+//            itemView.setTag(this);
+//            itemView.setOnClickListener(mOnItemClickListener);
         }
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
+        }
+
     }
 }

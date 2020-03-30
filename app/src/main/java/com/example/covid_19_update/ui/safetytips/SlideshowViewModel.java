@@ -1,4 +1,4 @@
-package com.example.covid_19_update.ui.slideshow;
+package com.example.covid_19_update.ui.safetytips;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
