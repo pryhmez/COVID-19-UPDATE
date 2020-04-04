@@ -30,6 +30,12 @@ public class Hotlines {
             {"08002684319", "07002684319", "070012684319"}, {"08035025692", "08033908772", "08056456250"}, {"08038210122", "08023229267", "08073431342"},
             {"09062970434", "09062970435", "09062970436", "112"}, {"08023169485", "08033565529", "08052817243", "08028971864"}};
 
+    String [] questionsArr = {"Are you dry coughing?", "Do you have a flu ?", "Is your throat sore?", "Are You having diarrhea?", "Are you experiencing body/joint pains?",
+                                "Do you have headache?", "Do you have a fever?", "Are you having difficult breathing?", "Are you experiencing fatigue?", "Have you travelled recently?",
+        "Have you travelled to coronavirus infected area?", "Do you have contact or taking care of covid-19 positive patient?"};
+
+    String [] pointsArr = {"2", "1", "1", "1", "1", "1", "1", "3", "1", "1", "2", "3" };
+
     public String[] getStates() {
         return states;
     }
@@ -37,4 +43,11 @@ public class Hotlines {
     public String[][] getNumbers() {
         return numbers;
     }
+
+    public String[] getQuestionsArr () {return questionsArr; }
+
+    public String[] getPointsArr() {
+        return pointsArr;
+    }
+
 }

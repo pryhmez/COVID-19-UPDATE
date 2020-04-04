@@ -115,7 +115,7 @@ public class NewsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
         listener = (myView, position) -> {
-            Toast.makeText(getActivity().getApplicationContext(), "Position "+position , Toast.LENGTH_LONG).show();
+//            Toast.makeText(getActivity().getApplicationContext(), "Position "+position , Toast.LENGTH_LONG).show();
             Log.d("chosen", String.valueOf(((int) position)));
             Intent intent = new Intent(getActivity(), ArticlesWebView.class);
             intent.putExtra("page", itemsList.get(position).getUrl());

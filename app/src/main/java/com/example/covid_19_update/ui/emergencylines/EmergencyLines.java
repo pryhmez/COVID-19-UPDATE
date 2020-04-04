@@ -1,9 +1,14 @@
 package com.example.covid_19_update.ui.emergencylines;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,11 +22,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.covid_19_update.Hotlines;
+import com.example.covid_19_update.MainActivity;
 import com.example.covid_19_update.R;
+import com.example.covid_19_update.ui.share.ShareFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +45,8 @@ public class EmergencyLines extends Fragment {
     private ListView listView;
     private Hotlines hotlines;
     private String [] f;
+    private ImageButton share;
+    private static final int CALL_PERMISSION_CODE = 100;
 
     public static EmergencyLines newInstance() {
         return new EmergencyLines();
@@ -48,7 +60,26 @@ public class EmergencyLines extends Fragment {
         hotlines = new Hotlines();
         statesSpinner = root.findViewById(R.id.statesSpinner);
         listView = root.findViewById(R.id.numberslist);
+        share = root.findViewById(R.id.share_lines);
         initSpinner();
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EmergencyLines em =  new EmergencyLines();
+
+                ShareFragment nextFrag= new ShareFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.emergencylines, nextFrag, "findThisFragment")
+//                        .remove()
+//                        .addToBackStack(null)
+//                        .commit();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.emergencylines, nextFrag, "fragmentTag");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         return root;
     }
@@ -120,16 +151,86 @@ public class EmergencyLines extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            String d = f[i];
-                try {
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:"+d));
-                    startActivity(callIntent);
-                } catch (ActivityNotFoundException activityException) {
-                    Log.e("Calling a Phone Number", "Call failed", activityException);
+                if(checkPermission(
+                        Manifest.permission.CALL_PHONE,
+                        CALL_PERMISSION_CODE)){
+                    String d = f[i];
+                    try {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:"+d));
+                        startActivity(callIntent);
+                    } catch (ActivityNotFoundException activityException) {
+                        Log.e("Calling a Phone Number", "Call failed", activityException);
+                    }
+                }else {
+                    requestPermission( Manifest.permission.CALL_PHONE, CALL_PERMISSION_CODE);
                 }
+
             }
         });
+    }
+
+
+    // Function to check and request permission.
+    public boolean checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(getActivity(), permission)
+                == PackageManager.PERMISSION_DENIED) {
+
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public  void requestPermission(String permission, int requestCode) {
+        // Requesting the permission
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[] { permission },
+                requestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super
+                .onRequestPermissionsResult(requestCode,
+                        permissions,
+                        grantResults);
+
+        if (requestCode == CALL_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(),
+                        "Call Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else {
+                Toast.makeText(getActivity(),
+                        "Call Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+        else if (requestCode == CALL_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(),
+                        "Storage Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else {
+                Toast.makeText(getActivity(),
+                        "Storage Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
     }
 
 }

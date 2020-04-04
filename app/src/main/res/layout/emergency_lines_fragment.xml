@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/emergencylines"
     tools:context=".ui.emergencylines.EmergencyLines">
 
 
@@ -26,6 +27,13 @@
             android:layout_margin="10dp" />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Click the phone to dial" />
+
     <ListView
         android:id="@+id/numberslist"
         android:layout_width="match_parent"
@@ -37,5 +45,16 @@
         android:visibility="gone"
         />
 
-
+    <ImageButton
+        android:id="@+id/share_lines"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        android:background="@drawable/btn_blue"
+        android:src="@drawable/ic_send_black_24dp"
+        android:padding="10dp"
+        android:foregroundGravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20dp"/>
 </LinearLayout>
