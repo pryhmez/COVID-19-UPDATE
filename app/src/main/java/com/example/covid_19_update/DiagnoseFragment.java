@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -149,11 +151,13 @@ public class DiagnoseFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                EmergencyLines nextFrag= new EmergencyLines();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.diagnoses, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+//                EmergencyLines nextFrag= new EmergencyLines();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.diagnoses, nextFrag, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_emergencylines);
                 myDialog.dismiss();
             }
         });

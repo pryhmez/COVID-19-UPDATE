@@ -29,7 +29,7 @@ public class ShareFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ImageButton btnShare;
+    private Button btnShare;
     private EditText etMessage;
 
     public ShareFragment() {
@@ -76,8 +76,10 @@ public class ShareFragment extends Fragment {
             public void onClick(View view) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "invites you to download the COVID-19 app - check for coronavirus symptoms, cases, call emergency hotlines, and get safety tips /n Download" +
-                        "here >> https://covid19app.site/";
+                String shareBody = "invites you to download the COVID-19 app \n This app is recommended by health professionals to keep you updated about coronavirus, get safety tips" +
+                        " on how to stay safe, lets you check" +
+                        " symptoms and reach emergency helpline to survive this pandermic. \n \n Download" +
+                        " here >> https://covid19app.site/";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Covid19 app");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, etMessage.getText().toString() + " " + shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));

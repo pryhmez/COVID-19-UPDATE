@@ -15,6 +15,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +36,7 @@ import com.example.covid_19_update.Hotlines;
 import com.example.covid_19_update.MainActivity;
 import com.example.covid_19_update.R;
 import com.example.covid_19_update.ui.share.ShareFragment;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +50,7 @@ public class EmergencyLines extends Fragment {
     private ListView listView;
     private Hotlines hotlines;
     private String [] f;
-    private ImageButton share;
+    private Button share;
     private static final int CALL_PERMISSION_CODE = 100;
 
     public static EmergencyLines newInstance() {
@@ -53,8 +58,8 @@ public class EmergencyLines extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.emergency_lines_fragment, container, false);
 
         hotlines = new Hotlines();
@@ -66,18 +71,11 @@ public class EmergencyLines extends Fragment {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EmergencyLines em =  new EmergencyLines();
 
-                ShareFragment nextFrag= new ShareFragment();
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.emergencylines, nextFrag, "findThisFragment")
-//                        .remove()
-//                        .addToBackStack(null)
-//                        .commit();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.emergencylines, nextFrag, "fragmentTag");
-                transaction.addToBackStack(null);
-                transaction.commit();
+                
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_share);
+
             }
         });
 
