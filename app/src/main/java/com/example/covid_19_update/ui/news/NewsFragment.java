@@ -3,6 +3,7 @@ package com.example.covid_19_update.ui.news;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Movie;
 import android.graphics.Rect;
@@ -62,6 +63,8 @@ public class NewsFragment extends Fragment {
     private Article article;
     private Util utils;
     private LinearLayout noInt;
+    private final String FILE = "news";
+    private SharedPreferences sharedPreferences;
 
     ArticlesAdapter.RecyclerViewClickListener listener;
 
@@ -107,6 +110,8 @@ public class NewsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
 //        mAdapter = new ArticlesAdapter(itemsList, getActivity(), listener);
+
+        sharedPreferences = getActivity().getSharedPreferences(FILE, Context.MODE_PRIVATE);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -185,6 +190,16 @@ public class NewsFragment extends Fragment {
                             nDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        }finally{
+
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                Gson gson = new Gson();
+                                String json = gson.toJson(itemsList);
+                                editor.clear();
+                                editor.putString( "data", json);
+                                editor.apply();
+                                Log.d("noti", "data news entered");
+
                         }
 
 //                        List<Movie> items = new Gson().fromJson(response.toString(), new TypeToken<List<Movie>>() {

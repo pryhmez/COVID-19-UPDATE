@@ -78,7 +78,7 @@ public class ShareFragment extends Fragment {
                 sharingIntent.setType("text/plain");
                 String shareBody = "invites you to download the COVID-19 app \n This app is recommended by health professionals to keep you updated about coronavirus, get safety tips" +
                         " on how to stay safe, lets you check" +
-                        " symptoms and reach emergency helpline to survive this pandermic. \n \n Download" +
+                        " symptoms and reach emergency helpline to survive this pandemic. \n \n Download" +
                         " here >> https://covid19app.site/";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Covid19 app");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, etMessage.getText().toString() + " " + shareBody);

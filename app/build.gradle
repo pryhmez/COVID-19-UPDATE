@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 
     defaultConfig {
         applicationId "com.example.covid_19_update"
@@ -54,7 +57,7 @@ dependencies {
 
     // volley http library
     implementation 'com.android.volley:volley:1.0.0'
-    implementation 'com.google.code.gson:gson:2.6'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // glide image library
     implementation 'com.github.bumptech.glide:glide:4.3.1'

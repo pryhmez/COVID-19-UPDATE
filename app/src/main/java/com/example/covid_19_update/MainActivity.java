@@ -1,9 +1,12 @@
 package com.example.covid_19_update;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.covid_19_update.NotificationServices.NotiServices;
+import com.example.covid_19_update.NotificationServices.NotificationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -16,6 +19,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.security.Provider;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -24,6 +29,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //starting background service
+        Intent serviceIntent = new Intent(this, NotificationServices.class);
+        startService(serviceIntent);
+
+//       Intent serviceIntent = new Intent(this, NotificationServices.class);
+////       serviceIntent.putExtra("title", "eoningeiog");
+////       serviceIntent.putExtra("message", "kemfgnengoen");
+//
+//        startService(serviceIntent);
+//        NotiServices notiServices = new NotiServices(this);
+//        notiServices.createNotification("the title", "the message");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
