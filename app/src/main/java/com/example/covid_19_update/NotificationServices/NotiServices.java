@@ -184,6 +184,8 @@ public class NotiServices {
         mBuilder.setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(false)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
 
